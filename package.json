@@ -1,0 +1,23 @@
+{
+  "name": "jsprivateblockchain",
+  "version": "1.0.0",
+  "description": "private blockchain witten by js",
+  "main": "levelSandbox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnigeeker/JsPrivateBlockchain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omnigeeker/JsPrivateBlockchain/issues"
+  },
+  "homepage": "https://github.com/omnigeeker/JsPrivateBlockchain#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "level": "^4.0.0"
+  }
+}
