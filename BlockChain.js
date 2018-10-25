@@ -6,21 +6,7 @@ const SHA256 = require('crypto-js/sha256');
 const level = require('level');
 const chainDB = './data';
 const db = level(chainDB);
-
-
-/* ===== Block Class ==============================
-|  Class with a constructor for block 			   |
-|  ===============================================*/
-
-class Block{
-	constructor(data){
-     this.hash = "",
-     this.height = 0,
-     this.body = data,
-     this.time = 0,
-     this.previousBlockHash = ""
-    }
-}
+const Block = require('./Block.js')
 
 /* ===== Blockchain Class ==========================
 |  Class with a constructor for new blockchain 		|
@@ -28,8 +14,6 @@ class Block{
 
 class Blockchain {
   constructor() {
-    //this.chain = [];
-    this.addBlock(new Block("First block in the chain - Genesis block"));
   }
 
   // Add new block
@@ -53,9 +37,10 @@ class Blockchain {
       newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
       await this.setBlock(newBlock.height, newBlock);
       console.log("addBlock: " + newBlock);
-
+      return newBlock;
     } catch(err) {
       console.log("addBlock error: " + err);
+      return null;
     }
   }
 
@@ -158,13 +143,18 @@ class Blockchain {
         }
       }
       if (errorLog.length>0) {
-        console.log('Block errors = ' + errorLog.length);
-        console.log('Blocks: '+errorLog);
+        let msg = 'validateChain: Error Blocks: '+errorLog;
+        console.log(msg);
+        return msg;
       } else {
-        console.log('No errors detected');
+        let msg = 'validateChain: No errors detected';
+        console.log(msg);
+        return msg;
       }
     } catch(err) {
-      console.log("validateChain: " + err);
+      let msg = "validateChain: " + err;
+      console.log(msg);
+      return msg;
     }
   }
 
@@ -180,7 +170,4 @@ class Blockchain {
   }
 }
 
-module.exports = {
-  Blockchain: Blockchain,
-  Block: Block
-}
+module.exports = Blockchain;

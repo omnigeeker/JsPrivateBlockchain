@@ -18,6 +18,7 @@
   "homepage": "https://github.com/omnigeeker/JsPrivateBlockchain#readme",
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "hapi": "^17.6.0",
     "level": "^4.0.0"
   }
 }
