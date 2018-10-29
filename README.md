@@ -6,7 +6,9 @@ I build a RESTful API using a Node.js framework that will interface with the pri
 
 ### Prerequisites
 
-You must install nodejs
+### Prerequisites
+
+Installing Node and NPM is pretty straightforward using the installer package available from the (Node.js web site)[https://nodejs.org/en/].
 
 ### Installing
 
@@ -35,7 +37,7 @@ If there is no blocks in local leveldb, then it will generate 10 block automatic
 Use
 
 ```
-curl http://localhost:8000/api/block/0
+curl http://localhost:8000/block/0
 ```
 
 The result is:
@@ -47,10 +49,10 @@ The result is:
 You can see the blocks weith block height like this
 
 ```
-curl http://localhost:8000/api/block/9
+curl http://localhost:8000/block/9
 ```
 
-The result is:
+If there is more than 10 blocks, then the result is:
 
 ```
 {"hash":"fc9c499f5a2be1be0d77572e8afba24d06ab38eceaf637519dc53dbaaf1544d8","height":9,"body":"test data 9","time":"1540433208","previousBlockHash":"d008f64d8d859065297afe7881c81be42cf37e3dfde3051c1fe1284e70ace2dc"}
@@ -62,13 +64,13 @@ The result is:
 Use wFetch which is a windows HTTP request and response tool;
 
 ```
-POST /api/block HTTP/1.0\r\n
+POST /block HTTP/1.0\r\n
 Content-Type: application/json\r\n
 Host: localhost\r\n
 Accept: */*\r\n
 Content-Length:25\r\n
 \r\n
-{"data":"New block data"}
+{"body": "New block data"}
 ```
 
 Then New Block will added to leveldb
@@ -89,7 +91,7 @@ Connection: close\r\n
 If the HTTP body is empty, it will validate the chain, like this
 
 ```
-POST /api/block HTTP/1.0\r\n
+POST /block HTTP/1.0\r\n
 Host: localhost\r\n
 Accept: */*\r\n
 \r\n

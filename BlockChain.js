@@ -14,6 +14,15 @@ const Block = require('./Block.js')
 
 class Blockchain {
   constructor() {
+    this.createGenesisBlock();
+  }
+
+  async createGenesisBlock() {
+    let chainLength = await this.getBlockHeight();
+    if(chainLength === 0){
+      console.log("chainLength is 0, so create some blocks");
+      await this.addBlock(new Block("genesis block"));
+    }
   }
 
   // Add new block
