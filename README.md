@@ -6,9 +6,9 @@ I build a RESTful API using a Node.js framework that will interface with the pri
 
 ### Prerequisites
 
-### Prerequisites
-
 Installing Node and NPM is pretty straightforward using the installer package available from the (Node.js web site)[https://nodejs.org/en/].
+
+I use hapijs as the framework of RESTful API.
 
 ### Installing
 

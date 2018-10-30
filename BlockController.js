@@ -30,8 +30,8 @@ class BlockController {
                 try {
                     let block = await this.blockchain.getBlock(request.params.index);
                     const response = h.response('success');
-                    response.type('text/json');
-                    return JSON.stringify(block)
+                    //response.type('text/json');
+                    return block;
                 } catch(e) {
                     return "The block " + request.params.index + " is out of bounds"; 
                 }
@@ -54,12 +54,12 @@ class BlockController {
                     if (payload === null) { // No HTTP body, so check the block chain
                         return await this.blockchain.validateChain();
                     }
-                    if (payload.body === undefined) {
+                    if (payload.body === undefined || payload.body === '') {
                         return "no body param in request body json";
                     }
                     let body = payload.body;
                     let newBlock = await this.blockchain.addBlock(new Block(body));
-                    return JSON.stringify(newBlock)
+                    return newBlock
                 } catch(err) {
                     return "Error: " + err;
                 }
