@@ -84,6 +84,33 @@ class Blockchain {
     })
   }
 
+  async getBlockByHash(hash) {
+    let count = await this.getBlockHeight();
+    for(let i = 0; i < count; i ++) {
+      let block = await this.getBlock(i);
+      if (block.hash === hash) {
+        return block;
+      }
+    }
+    return null;
+  }
+
+  async getBlockByAddress(address){
+    let blocks = []
+    let count = await this.getBlockHeight();
+    for(let i = 0; i < count; i ++) {
+      let block = await this.getBlock(i);
+      if (block.body != null) {
+        if (block.body.address === address) {
+          blocks.push(block);
+        }
+      }
+    }
+    if (blocks === []) 
+      return null;
+    return blocks;
+  }
+
   // set block object to chain
   setBlock(blockHeight, newBlock) { 
     return new Promise((resolve, reject) => {
