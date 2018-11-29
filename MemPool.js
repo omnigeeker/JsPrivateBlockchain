@@ -10,6 +10,11 @@ class MemPool{
         this.timeoutRequests = new Map();;
     }
 
+    removeValidationRequest(address) {
+        this.mempool.delete(address);
+        this.timeoutRequests.delete(address);
+    }
+
     requestValidation(address) {
         const self = this;
         let currentTimeStamp = new Date().getTime().toString().slice(0, -3);
@@ -21,13 +26,12 @@ class MemPool{
         let timeElapse = 0;
 
         if (this.mempool.has(address)) {
-            let requestTimeStamp = this.mempool.get(address);
-            let timeElapse = currentTimeStamp - requestTimeStamp;
+            requestTimeStamp = this.mempool.get(address);
+            timeElapse = currentTimeStamp - requestTimeStamp;
         } else {
             this.mempool.set(address, currentTimeStamp);
             this.timeoutRequests.set(address, setTimeout(function(){
-                self.mempool.delete(address);
-                self.timeoutRequests.delete(address);
+                self.removeValidationRequest(address);
             }, TimeoutRequestsWindowTime));
         }
         let timeLeft = (TimeoutRequestsWindowTime/1000) - timeElapse;

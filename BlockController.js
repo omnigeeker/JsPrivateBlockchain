@@ -72,14 +72,16 @@ class BlockController {
                 let body = request.payload;   
                 let address = body.address;
                 if (this.mempool.isExpired(address))
-                    return h.response('Validation window is expired!; Please request validation again.').cose(400);
+                    return h.response('No validation window; Please request validation again.').code(400);
                 let starStory = body.star.story
                 body.star.storyDecoded = starStory;
                 body.star.story = Buffer(starStory).toString('hex');
+
                 
                 try {
                     console.log("body: " + body);
                     let newBlock = await this.blockchain.addBlock(new Block(body));
+                    this.mempool.removeValidationRequest(address);
                     return newBlock
                 } catch(err) {
                     return "Error: " + err;
@@ -129,7 +131,7 @@ class BlockController {
                 let signature = body.signature;
 
                 if (this.mempool.isExpired(address))
-                    return h.response('Validation window is expired!; Please request validation again.').cose(400);
+                    return h.response('Validation window is expired!; Please request validation again.').code(400);
 
                 let ret = this.mempool.getMessageSignatureValidationObject(address, signature);
                 return ret;
