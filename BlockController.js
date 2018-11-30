@@ -56,7 +56,7 @@ class BlockController {
                 const starSchema = Joi.object({
                     dec: Joi.string().required(), //"-26° 29'\'' 24.9",
                     ra: Joi.string().required(), //"16h 29m 1.0s",
-                    story: Joi.string().min(4).max(500).required(),
+                    story: Joi.string().regex(/^[\x00-\x7F]+$/).min(4).max(500).required(),
                     mag: Joi.string(),
                     constellation: Joi.string().length(3)
                 });
@@ -72,7 +72,7 @@ class BlockController {
                 let body = request.payload;   
                 let address = body.address;
                 if (this.mempool.isExpired(address))
-                    return h.response('No validation window; Please request validation again.').code(400);
+                   return h.response('No validation window; Please request validation again.').code(400);
                 let starStory = body.star.story
                 body.star.storyDecoded = starStory;
                 body.star.story = Buffer(starStory).toString('hex');
